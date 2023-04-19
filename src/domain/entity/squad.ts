@@ -83,4 +83,14 @@ export class Squad {
     const updatedProjects = this.projects.splice(findProjectIndex, 1);
     this.members = updatedProjects;
   }
+
+  public getSquad() {
+    return {
+      id: this.id,
+      leader: this.leader,
+      members: this.members,
+      projects: this.projects,
+      name: this.name,
+    };
+  }
 }
