@@ -1,24 +1,6 @@
 import { RepositoryMock } from "../../../test/repostiory/repository";
-import { Squad } from "../../domain/entity/squad";
-import {
-  CreateSquadData,
-  ICreateSquadUsecase,
-  ISquad,
-} from "../../domain/usecases/createSquad";
-
-interface ICreateRepository<T> {
-  create: (data: T) => Promise<T>;
-}
-
-class CreateSquadUsecase implements ICreateSquadUsecase {
-  constructor(private readonly squadRepository: ICreateRepository<ISquad>) {}
-
-  public async execute(data: CreateSquadData): Promise<ISquad> {
-    const squad = new Squad(data);
-    const newSquad = await this.squadRepository.create(squad.getSquad());
-    return newSquad;
-  }
-}
+import { ISquad } from "../../domain/usecases/createSquad";
+import { CreateSquadUsecase } from "./createSquad";
 
 function makeSut() {
   const repository = new RepositoryMock<ISquad>();
@@ -41,5 +23,11 @@ describe("Create squad usecase", () => {
     const { createSquadUsecase, repository } = makeSut();
     await createSquadUsecase.execute(makeValidSquad());
     expect(repository.inputCreate).toEqual(makeValidSquad());
+  });
+
+  test("Should return a new squad if is created", async () => {
+    const { createSquadUsecase } = makeSut();
+    const response = await createSquadUsecase.execute(makeValidSquad());
+    expect(response).toEqual(makeValidSquad());
   });
 });
