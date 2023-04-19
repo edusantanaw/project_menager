@@ -1,5 +1,5 @@
 import { RepositoryMock } from "../../../test/repostiory/repository";
-import { ISquad } from "../../domain/usecases/createSquad";
+import { ISquad } from "../../interfaces/squad";
 import { CreateSquadUsecase } from "./createSquad";
 
 function makeSut() {

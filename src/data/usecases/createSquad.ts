@@ -1,12 +1,11 @@
 import { Squad } from "../../domain/entity/squad";
-import {
-  CreateSquadData,
-  ICreateSquadUsecase,
-  ISquad,
-} from "../../domain/usecases/createSquad";
+import { ICreateUsecase } from "../../domain/usecases/createSquad";
+import { CreateSquadData, ISquad } from "../../interfaces/squad";
 import { ICreateRepository } from "../protocols/repository/createRepository";
 
-export class CreateSquadUsecase implements ICreateSquadUsecase {
+export class CreateSquadUsecase
+  implements ICreateUsecase<CreateSquadData, ISquad>
+{
   constructor(private readonly squadRepository: ICreateRepository<ISquad>) {}
 
   public async execute(data: CreateSquadData): Promise<ISquad> {

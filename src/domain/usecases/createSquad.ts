@@ -1,18 +1,5 @@
-export type CreateSquadData = {
-  name: string;
-  leader: string;
-  members: string[];
-  projects: string[];
-};
+import { ISquad } from "../../interfaces/squad";
 
-export type ISquad = {
-  id: string;
-  name: string;
-  leader: string;
-  members: string[];
-  projects: string[];
-};
-
-export interface ICreateSquadUsecase {
-  execute: (data: CreateSquadData) => Promise<ISquad>;
+export interface ICreateUsecase<T, R> {
+  execute: (data: T) => Promise<R>;
 }
