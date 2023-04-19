@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0"
+  },
+  "scripts": {
+    "test": "jest --passWithNoTests --runInBand --no-cache --watchAll",
+    "start": "ts-node-dev --watch --respawn --transpile-only --clear ./src/main/index.ts"
+  }
+}
