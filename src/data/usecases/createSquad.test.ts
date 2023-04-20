@@ -13,8 +13,6 @@ function makeValidSquad(): ISquad {
     id: "1234",
     leader: "1234",
     name: "test",
-    members: [],
-    projects: [],
   };
 }
 

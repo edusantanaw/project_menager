@@ -3,17 +3,17 @@ import { randomUUID } from "node:crypto";
 type data = {
   id?: string;
   name: string;
-  ownerId: string;
+  squadId: string;
 };
 
 export class Project {
   private id: string;
   private name: string;
-  private ownerId: string;
+  private squadId: string;
   constructor(data: data) {
     this.id = data.id ?? randomUUID();
     this.name = data.name;
-    this.ownerId = data.ownerId;
+    this.squadId = data.squadId;
   }
 
   public get getId() {
@@ -32,19 +32,19 @@ export class Project {
     this.name = newName;
   }
 
-  public get getOwnerId() {
-    return this.ownerId;
+  public get getSquadId() {
+    return this.squadId;
   }
 
-  public set setOwnerId(id: string) {
-    this.ownerId = id;
+  public set setSquadId(id: string) {
+    this.squadId = id;
   }
 
   public getProject() {
     return {
       id: this.id,
       name: this.name,
-      ownerId: this.ownerId,
+      squadId: this.squadId,
     };
   }
 }
