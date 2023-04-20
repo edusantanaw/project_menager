@@ -1,32 +1,6 @@
 import { RepositoryMock } from "../../../test/repostiory/repository";
-import { Task } from "../../domain/entity/task";
-import { ICreateUsecase } from "../../domain/usecases/createSquad";
-import { IBoard } from "../../interfaces/board";
-import { ICreateRepository } from "../protocols/repository/createRepository";
-import { ILoadByIdRepository } from "../protocols/repository/loadById";
-
-type ITask = {
-  id: string;
-  title: string;
-  description: string;
-  assignedTo: string;
-  expiresAt: string;
-  boardId: string;
-};
-
-export class CreateTaskUsecase implements ICreateUsecase<any, ITask> {
-  constructor(
-    private readonly boardRepository: ILoadByIdRepository<IBoard>,
-    private readonly taskRepository: ICreateRepository<ITask>
-  ) {}
-  public async execute(data: ITask): Promise<ITask> {
-    const boardExists = await this.boardRepository.loadById(data.boardId);
-    if (!boardExists) throw new Error("Board não existe!");
-    const task = new Task(data);
-    const newTask = await this.taskRepository.create(task.getTask());
-    return newTask;
-  }
-}
+import { ITask } from "../../interfaces/task";
+import { CreateTaskUsecase } from "./createTask";
 
 function makeSut() {
   const boardRepository = new RepositoryMock<any>();
@@ -69,5 +43,11 @@ describe("Create task usecase", () => {
     const { createTaskUsecase, taskRepository } = makeSut();
     await createTaskUsecase.execute(makeValidTask());
     expect(taskRepository.inputCreate).toEqual(makeValidTask());
+  });
+
+  test("Should return a new task if is created", async () => {
+    const { createTaskUsecase } = makeSut();
+    const response = await createTaskUsecase.execute(makeValidTask());
+    expect(response).toEqual(makeValidTask());
   });
 });
