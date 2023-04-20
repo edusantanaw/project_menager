@@ -28,4 +28,12 @@ export class User {
       id: this.id,
     };
   }
+
+  public get getPassword() {
+    return this.password;
+  }
+
+  public set setPassword(pass: string) {
+    this.password = pass;
+  }
 }
