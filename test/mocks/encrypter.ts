@@ -16,3 +16,4 @@ export class EncrypterSpy implements IEncrypter {
     return "hashed_password";
   }
 }
+    

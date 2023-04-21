@@ -10,6 +10,7 @@ export class Squad {
   private id: string;
   private name: string;
   private leader: string;
+
   constructor(data: data) {
     this.id = data.id ?? randomUUID();
     this.name = data.name;
@@ -46,5 +47,14 @@ export class Squad {
       leader: this.leader,
       name: this.name,
     };
+  }
+
+  public addMember(userId: string) {
+    const newMember = {
+      id: randomUUID(),
+      userId,
+      squadId: this.id,
+    };
+    return newMember;
   }
 }
