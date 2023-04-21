@@ -1,5 +1,5 @@
 import { User } from "../../domain/entity/user";
-import { ICreateUsecase } from "../../domain/usecases/createSquad";
+import { ICreateUsecase } from "../../domain/usecases/create";
 import { IUser } from "../../interfaces/user";
 import { IGenHash } from "../protocols/helpers/encypter";
 import { IGenToken } from "../protocols/helpers/jwt";

@@ -1,5 +1,5 @@
 import { Task } from "../../domain/entity/task";
-import { ICreateUsecase } from "../../domain/usecases/createSquad";
+import { ICreateUsecase } from "../../domain/usecases/create";
 import { IBoard } from "../../interfaces/board";
 import { ITask } from "../../interfaces/task";
 import { ICreateRepository } from "../protocols/repository/createRepository";

@@ -1,38 +1,9 @@
 import { RepositoryMock } from "../../../test/repostiory/repository";
-import { Squad } from "../../domain/entity/squad";
-import {
-  IAddNewMemberUsecase,
-  addMemberData,
-} from "../../domain/usecases/addNewMember";
+import { IMember } from "../../interfaces/member";
 import { ISquad } from "../../interfaces/squad";
 import { IUser } from "../../interfaces/user";
-import { ICreateRepository } from "../protocols/repository/createRepository";
-import { ILoadByIdRepository } from "../protocols/repository/loadById";
+import { AddNewMemberUsecase } from "./addMember";
 import { makeValidUser } from "./createUser.test";
-
-type IMember = {
-    id: string;
-    squadId: string;
-    userId: string;
-}
-
-export class AddNewMemberUsecase implements IAddNewMemberUsecase {
-  constructor(
-    private readonly squadRepository: ILoadByIdRepository<ISquad>,
-    private readonly userRepository: ILoadByIdRepository<IUser>,
-    private readonly membersRepository: ICreateRepository<IMember>
-  ) {}
-  public async execute(data: addMemberData): Promise<void> {
-    const maybeSquad = await this.squadRepository.loadById(data.squadId);
-    if (!maybeSquad) throw new Error("Equipe não encontrada!");
-    const squad = new Squad(maybeSquad);
-    const user = await this.userRepository.loadById(data.userId);
-    if(!user) throw new Error("Usuario não encontrado!");               
-    const newMember = squad.addMember(user.id);
-    await this.membersRepository.create(newMember);
-}
-}
-
 
 function makeSut() {
   const squadRepository = new RepositoryMock<ISquad>();
@@ -47,7 +18,12 @@ function makeSut() {
     { id: "any_squad_id", leader: "any_id", name: "any_name" },
   ];
   userRepository.items = [makeValidUser()];
-  return { addNewMemberUsecase, squadRepository, userRepository , membersRepository};
+  return {
+    addNewMemberUsecase,
+    squadRepository,
+    userRepository,
+    membersRepository,
+  };
 }
 
 describe("Add new member usecase", () => {
@@ -95,8 +71,7 @@ describe("Add new member usecase", () => {
       squadId: "any_squad_id",
       userId: "any_id",
     });
-    const {id, ...rest} = membersRepository.inputCreate as IMember
-    expect(rest).toEqual({squadId: "any_squad_id", userId: "any_id"});
-  })
-
+    const { id, ...rest } = membersRepository.inputCreate as IMember;
+    expect(rest).toEqual({ squadId: "any_squad_id", userId: "any_id" });
+  });
 });

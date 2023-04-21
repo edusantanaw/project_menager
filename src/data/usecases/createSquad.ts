@@ -1,5 +1,5 @@
 import { Squad } from "../../domain/entity/squad";
-import { ICreateUsecase } from "../../domain/usecases/createSquad";
+import { ICreateUsecase } from "../../domain/usecases/create";
 import { CreateSquadData, ISquad } from "../../interfaces/squad";
 import { ICreateRepository } from "../protocols/repository/createRepository";
 

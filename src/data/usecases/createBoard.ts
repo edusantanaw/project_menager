@@ -1,5 +1,5 @@
 import { Board } from "../../domain/entity/boad";
-import { ICreateUsecase } from "../../domain/usecases/createSquad";
+import { ICreateUsecase } from "../../domain/usecases/create";
 import { CreateBoard, IBoard } from "../../interfaces/board";
 import { ICreateRepository } from "../protocols/repository/createRepository";
 import { ILoadByIdRepository } from "../protocols/repository/loadById";
