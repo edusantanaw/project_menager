@@ -3,7 +3,7 @@ import { JwtServiceMock } from "../../../test/mocks/jwt";
 import { UserRepositoryMock } from "../../../test/repostiory/user";
 import { CreateUserUsecase } from "./createUser";
 
-function makeValidUser() {
+export function makeValidUser() {
   return {
     email: "any_email",
     id: "any_id",
