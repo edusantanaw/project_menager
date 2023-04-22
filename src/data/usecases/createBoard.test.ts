@@ -18,8 +18,8 @@ function makeValidBoard(): IBoard {
     id: "any_id",
     title: "any_title",
     projectId: "any_project_id",
-    };
-  }
+  };
+}
 
 describe("Create board usecase", () => {
   test("Should throw if project not exists", () => {
