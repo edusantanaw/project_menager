@@ -1,54 +1,12 @@
-import { data } from "../../data/usecases/createTask";
-import { Task } from "../../domain/entity/task";
-import { ICreateUsecase } from "../../domain/usecases/create";
+import { SchemaValidatorSpy } from "../../../test/mocks/helpers/schemaValidator";
+import { CreateUsecaseSpy } from "../../../test/mocks/usecases/create";
 import { ITask } from "../../interfaces/task";
 import {
   BadRequest,
   Created,
   ExceptionResponse,
 } from "../helpers/httpResponse";
-
-interface ISchemaValidator<T> {
-  isSchemaValid: (data: T) => string | null;
-}
-
-export class CreateController<T, D> {
-  constructor(
-    private readonly schemaValidator: ISchemaValidator<T>,
-    private readonly createUsecase: ICreateUsecase<T, D>
-  ) {}
-
-  public async handle(data: T) {
-    try {
-      const maybeMessageError = this.schemaValidator.isSchemaValid(data);
-      if (maybeMessageError) return BadRequest(maybeMessageError);
-      const response = await this.createUsecase.execute(data);
-      return Created(response);
-    } catch (err) {
-      return ExceptionResponse(err, 400);
-    }
-  }
-}
-
-class CreateUsecaseSpy implements ICreateUsecase<data, ITask> {
-  public notFound = false;
-  public input: unknown;
-  public async execute(data: data): Promise<ITask> {
-    this.input = data;
-    const task = new Task(data);
-    if (this.notFound) throw new Error("Tarefa não encontrada!");
-    return task.getTask();
-  }
-}
-
-class SchemaValidatorSpy implements ISchemaValidator<data> {
-  public returnContent: string | null = null;
-  public input: unknown;
-  isSchemaValid(data: data): string | null {
-    this.input = data;
-    return this.returnContent;
-  }
-}
+import { CreateController } from "./create";
 
 function makeValidTask(): ITask {
   return {
